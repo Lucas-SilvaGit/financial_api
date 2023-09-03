@@ -2,9 +2,9 @@ class Entry < ApplicationRecord
   belongs_to :account
   belongs_to :category
 
-  validate :check_account_balance, if: :despesa?
+  validate :check_account_balance, if: :expense?
 
-  enum entry_type: { receita: 'receita', despesa: 'despesa' }
+  enum entry_type: { revenue: 'revenue', expense: 'expense' }
 
   # before_save :check_account_balance_if_billed_changed
 
