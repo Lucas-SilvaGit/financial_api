@@ -18,6 +18,8 @@ class EntriesController < ApplicationController
     @entry = Entry.new(entry_params)
 
     if @entry.save
+      @entry.account.calculate_balance
+
       render json: @entry, status: :created, location: @entry
     else
       render json: @entry.errors, status: :unprocessable_entity
@@ -27,6 +29,8 @@ class EntriesController < ApplicationController
   # PATCH/PUT /entries/1
   def update
     if @entry.update(entry_params)
+      @entry.account.calculate_balance
+      
       render json: @entry
     else
       render json: @entry.errors, status: :unprocessable_entity
