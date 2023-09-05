@@ -40,6 +40,8 @@ class EntriesController < ApplicationController
   # DELETE /entries/1
   def destroy
     @entry.destroy
+
+    @entry.account.calculate_balance
   end
 
   private
