@@ -18,6 +18,8 @@ class EntriesController < ApplicationController
     @entry = Entry.new(entry_params)
 
     if @entry.save
+      @entry.account.calculate_balance
+
       render json: @entry, status: :created, location: @entry
     else
       render json: @entry.errors, status: :unprocessable_entity
@@ -27,6 +29,8 @@ class EntriesController < ApplicationController
   # PATCH/PUT /entries/1
   def update
     if @entry.update(entry_params)
+      @entry.account.calculate_balance
+      
       render json: @entry
     else
       render json: @entry.errors, status: :unprocessable_entity
@@ -36,6 +40,8 @@ class EntriesController < ApplicationController
   # DELETE /entries/1
   def destroy
     @entry.destroy
+
+    @entry.account.calculate_balance
   end
 
   private
@@ -46,6 +52,6 @@ class EntriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def entry_params
-      params.require(:entry).permit(:description, :value, :date, :billed, :entry_type, :category_id)
+      params.require(:entry).permit(:description, :value, :date, :billed, :entry_type, :category_id, :account_id)
     end
 end
