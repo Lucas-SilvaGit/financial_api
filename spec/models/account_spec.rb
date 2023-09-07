@@ -11,14 +11,42 @@ RSpec.describe Account, type: :model do
     expect(account).to_not be_valid
   end
 
-  it "calculates the balance correctly" do
-    account = create(:account)
-    
-    revenue_entry = create(:entry, account: account, entry_type: 'revenue', billed: true, value: 1500)
-    expense_entry = create(:entry, account: account, entry_type: 'expense', billed: true, value: 300)
-    
-    account.calculate_balance
+  context "when billed" do
+    it "calculates the balance correctly" do
+      account = create(:account)
+      
+      revenue_entry = create(:entry, account: account, entry_type: 'revenue', billed: true, value: 1500)
+      expense_entry = create(:entry, account: account, entry_type: 'expense', billed: true, value: 300)
+      
+      account.calculate_balance
+  
+      expect(account.balance).to eq(1200)
+    end    
+  end
+  
+  context "when not billed entry" do
+    it 'calculates the balance correctly with entry revenue not billed' do
+      account = create(:account)
 
-    expect(account.balance).to eq(1200)
+      required_revenue_entry = create(:entry, account: account, entry_type: 'revenue', billed: false, value: 800)
+      account.calculate_balance
+      expect(account.balance).to eq(0)
+
+      expense_entry = build(:entry, account: account, entry_type: 'expense', billed: true, value: 200)
+
+      expect(expense_entry).to_not be_valid
+      expect(expense_entry.errors[:value]).to include('Expense amount exceeds account balance')
+    end    
+    
+    it 'calculates the balance correctly with entry expense not billed' do
+      account = create(:account)
+
+      revenue_entry = create(:entry, account: account, entry_type: 'revenue', billed: true, value: 800)
+      account.calculate_balance
+      expect(account.balance).to eq(800)
+
+      required_expense_entry = build(:entry, account: account, entry_type: 'expense', billed: false, value: 200)
+      expect(account.balance).to eq(800)
+    end    
   end
 end
