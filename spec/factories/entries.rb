@@ -5,8 +5,9 @@ FactoryBot.define do
     date { Faker::Date.between(from: 2.days.ago, to: Date.today) }
     billed { true}
     category_id { 1 }
+    account_id { 1 }
 
-    association :category, factory: :category  # Adicione essa linha para associar a uma categoria existente
+    association :category, factory: :category
     association :account, factory: :account 
   end
 end
