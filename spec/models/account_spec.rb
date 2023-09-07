@@ -13,10 +13,12 @@ RSpec.describe Account, type: :model do
 
   it "calculates the balance correctly" do
     account = create(:account)
-    create(:entry, account: account, entry_type: 'revenue', billed: true, value: 2000)
-    create(:entry, account: account, entry_type: 'expense', billed: true, value: 300)
+    
+    revenue_entry = create(:entry, account: account, entry_type: 'revenue', billed: true, value: 1500)
+    expense_entry = create(:entry, account: account, entry_type: 'expense', billed: true, value: 300)
     
     account.calculate_balance
-    expect(account.balance).to eq(1700)
+
+    expect(account.balance).to eq(1200)
   end
 end
