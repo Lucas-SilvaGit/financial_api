@@ -21,7 +21,7 @@ module V1
       if @entry.save
         @entry.account.calculate_balance
 
-        render json: @entry, status: :created, location: v1_account_url(@entry)
+        render json: @entry, status: :created, location: v1_entry_url(@entry)
       else
         render json: @entry.errors, status: :unprocessable_entity
       end
