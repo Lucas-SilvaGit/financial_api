@@ -12,7 +12,7 @@ class Entry < ApplicationRecord
     if billed && billed_changed?
       return if account.balance >= value
 
-      errors.add(:value, 'Valor da despesa excede o saldo da conta')
+      errors.add(:value, 'Expense amount exceeds account balance')
     end
   end
 end
