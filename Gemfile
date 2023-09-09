@@ -49,3 +49,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #versionist
 gem 'versionist'
+
+#rack-cors
+gem 'rack-cors'
