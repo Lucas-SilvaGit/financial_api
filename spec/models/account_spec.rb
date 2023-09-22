@@ -16,8 +16,9 @@ RSpec.describe Account, type: :model do
       account = create(:account)
       
       revenue_entry = create(:entry, account: account, entry_type: 'revenue', billed: true, value: 1500)
+      account.calculate_balance
+
       expense_entry = create(:entry, account: account, entry_type: 'expense', billed: true, value: 300)
-      
       account.calculate_balance
   
       expect(account.balance).to eq(1200)
