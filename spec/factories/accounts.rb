@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :account do
     name { Faker::Company.name }
-    self.balance { 2000 }
+    balance { 0 }
   end
 end
