@@ -39,5 +39,14 @@ RSpec.describe Account, type: :model do
 
       expect(account.balance).to eq(0)
     end
+    
+    it 'balance with expense not billed' do
+      account = create(:account, balance: 0)
+
+      revenue_entry = create(:entry, account: account, entry_type: 'expense', billed: false, value: 800)
+      account.calculate_balance
+
+      expect(account.balance).to eq(0)
+    end
   end
 end
