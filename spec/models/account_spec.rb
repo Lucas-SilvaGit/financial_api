@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Account, type: :model do
-  it "is valid with valid attributes" do
+  it "validates account with positive balance" do
     account = build(:account, balance: 1000)
     expect(account).to be_valid
   end
