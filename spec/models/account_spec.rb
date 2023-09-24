@@ -9,15 +9,14 @@ RSpec.describe Account, type: :model do
   it "validates account with zero balance" do
     account = build(:account, balance: 0)
     expect(account).to be_valid
-  end
-  
+  end  
 
   it "is invalid with a negative balance" do
     account = build(:account, balance: -500)
     expect(account).to_not be_valid
   end
 
-  context "when billed" do
+  context "when account has billed entries" do
     it "calculates the balance correctly" do
       account = create(:account)
       
