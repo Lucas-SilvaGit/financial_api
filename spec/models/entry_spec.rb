@@ -15,4 +15,21 @@ RSpec.describe Entry, type: :model do
 
     expect(entry).to be_valid
   end
+
+  context "raises an error" do
+    it "when entry expense value exceeds account balance" do
+      account = create(:account, balance: 500)
+      expense_entry = build(:entry, account: account, entry_type: 'expense', billed: true, value: 600)
+      
+      expect { expense_entry.save! }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Value Expense amount exceeds account balance')
+    end
+
+    it 'when entry has negative value' do
+      account = create(:account, balance: 500)
+    
+      expense_entry = build(:entry, account: account, entry_type: 'expense', billed: false, value: -300)
+    
+      expect { expense_entry.save! }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Value cannot be negative')
+    end
+  end    
 end
