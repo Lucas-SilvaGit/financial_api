@@ -52,3 +52,6 @@ gem 'versionist'
 
 #rack-cors
 gem 'rack-cors'
+
+#kaminari
+gem 'kaminari'
