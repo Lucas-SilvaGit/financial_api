@@ -1,4 +1,6 @@
   class Account < ApplicationRecord
+    paginates_per 10
+
     before_create :set_default_balance
     has_many :entries
 

@@ -4,8 +4,11 @@ module V1
 
     # GET /accounts
     def index
-      @accounts = Account.all
+      page_number = params[:page].try(:[], :number)
+      per_page = params[:page].try(:[], :size)
 
+      @accounts = Account.all.page(page_number).per(per_page)
+      
       render json: @accounts
     end
 
