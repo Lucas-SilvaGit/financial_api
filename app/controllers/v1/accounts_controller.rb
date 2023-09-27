@@ -4,8 +4,18 @@ module V1
 
     # GET /accounts
     def index
-      @accounts = Account.all
+      filtered_accounts = Account.all
 
+      if params[:name].present?
+        filtered_accounts = filtered_accounts.where("name LIKE ?", "%#{params[:name]}%")
+      end
+
+      if params[:balance].present?
+        filtered_accounts = filtered_accounts.where(balance: params[:balance])
+      end
+
+      @accounts = filtered_accounts
+      
       render json: @accounts
     end
 
