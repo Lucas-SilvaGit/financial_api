@@ -10,6 +10,11 @@ module V1
         filtered_entries = filtered_entries.where("name LIKE ?", "%#{params[:description]}%")
       end
 
+      if params[:value].present?
+        filtered_entries = filtered_entries.where(value: params[:value])
+      end
+      
+
       @entries = filtered_entries
 
       render json: @entries
