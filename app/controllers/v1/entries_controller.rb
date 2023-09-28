@@ -4,7 +4,13 @@ module V1
 
     # GET /entries
     def index
-      @entries = Entry.all
+      filtered_entries = Entry.all
+
+      if params[:description].present?
+        filtered_entries = filtered_entries.where("name LIKE ?", "%#{params[:description]}%")
+      end
+
+      @entries = filtered_entries
 
       render json: @entries
     end
