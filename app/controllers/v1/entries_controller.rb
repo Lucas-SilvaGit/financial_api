@@ -22,6 +22,10 @@ module V1
         filtered_entries = filtered_entries.where(entry_type: params[:entry_type])
       end
 
+      if params[:category_id].present?
+        filtered_entries = filtered_entries.where(category_id: params[:category_id])
+      end
+
       @entries = filtered_entries
 
       render json: @entries
