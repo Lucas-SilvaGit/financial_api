@@ -14,6 +14,9 @@ module V1
         filtered_entries = filtered_entries.where(value: params[:value])
       end
       
+      if params.key?(:billed)
+        filtered_entries = filtered_entries.where(billed: params[:billed])
+      end
 
       @entries = filtered_entries
 
