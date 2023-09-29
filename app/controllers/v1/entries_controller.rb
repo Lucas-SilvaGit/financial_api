@@ -18,6 +18,10 @@ module V1
         filtered_entries = filtered_entries.where(billed: params[:billed])
       end
 
+      if params[:entry_type].present?
+        filtered_entries = filtered_entries.where(entry_type: params[:entry_type])
+      end
+
       @entries = filtered_entries
 
       render json: @entries
