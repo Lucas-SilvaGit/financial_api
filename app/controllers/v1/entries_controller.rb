@@ -5,36 +5,26 @@ module V1
     # GET /entries
     def index
       filtered_entries = Entry.all
-
-      if params[:description].present?
-        filtered_entries = filtered_entries.where("name LIKE ?", "%#{params[:description]}%")
+      filter_params = {
+        description: "name",
+        value: "value",
+        billed: "billed",
+        entry_type: "entry_type",
+        category_id: "category_id",
+        account_id: "account_id"
+      }
+    
+      filter_params.each do |param, field|
+        if params[param].present?
+          filtered_entries = filtered_entries.where("#{field} LIKE ?", "%#{params[param]}%")
+        end
       end
-
-      if params[:value].present?
-        filtered_entries = filtered_entries.where(value: params[:value])
-      end
-      
-      if params.key?(:billed)
-        filtered_entries = filtered_entries.where(billed: params[:billed])
-      end
-
-      if params[:entry_type].present?
-        filtered_entries = filtered_entries.where(entry_type: params[:entry_type])
-      end
-
-      if params[:category_id].present?
-        filtered_entries = filtered_entries.where(category_id: params[:category_id])
-      end
-
-      if params[:account_id].present?
-        filtered_entries = filtered_entries.when(account_id: params[:account_id])
-      end
-
+    
       @entries = filtered_entries
-
+    
       render json: @entries
     end
-
+    
     # GET /entries/1
     def show
       render json: @entry
