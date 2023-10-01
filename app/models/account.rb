@@ -2,6 +2,7 @@
     before_create :set_default_balance
     has_many :entries
 
+    validates :name, length: { maximum: 50 }, presence: true
     validates :balance, numericality: { greater_than_or_equal_to: 0 }
 
     def calculate_balance
