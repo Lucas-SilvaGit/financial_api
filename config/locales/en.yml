@@ -30,4 +30,44 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    models:
+      account:
+        one: Account
+        other: Accounts
+      category: 
+        one: Category
+        other: Categories
+      entry:
+        one: Entry
+        other: Entries
+    attributes:
+      # user:
+      #   id: Código
+      #   email: Email
+      #   first_name: Primeiro Nome
+      #   last_name: Sobrenome
+      #   password: Senha do Usuario
+      #   password_confirmation: Confirmação da senha do Usuario
+      #   created_at: Criado em
+      #   updated_at: Atualizado em
+      account: 
+        id: Id
+        name: Name
+        balance: Balance
+        created_at: created_at
+        updated_at: updated_at
+      category:
+        id: Id
+        description: Description
+        created_at: created_at
+        updated_at: updated_at
+      entry: 
+        id: Id
+        description: Description
+        value: Value
+        date: Date
+        billed: Billed
+        entry_type: Type
+        created_at: created_at
+        updated_at: updated_at
