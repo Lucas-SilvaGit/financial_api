@@ -6,7 +6,15 @@ class Entry < ApplicationRecord
 
   validate :value_not_negative
   validate :check_account_balance_if_billed_true, if: :expense?
-  
+
+  def as_json(options = {})
+    super(options.merge({ methods: [:formatted_date] }))
+  end
+
+  def formatted_date
+    date.strftime('%d-%m-%Y')
+  end
+
   private
 
   def check_account_balance_if_billed_true
