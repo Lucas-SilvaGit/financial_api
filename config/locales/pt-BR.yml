@@ -1,0 +1,42 @@
+'pt-BR':
+  activerecord:
+    models:
+      account:
+        one: Conta
+        other: Contas
+      category: 
+        one: Categoria
+        other: Categorias
+      entry:
+        one: Entrada
+        other: Entradas
+    attributes:
+      # user:
+      #   id: Código
+      #   email: Email
+      #   first_name: Primeiro Nome
+      #   last_name: Sobrenome
+      #   password: Senha do Usuario
+      #   password_confirmation: Confirmação da senha do Usuario
+      #   created_at: Criado em
+      #   updated_at: Atualizado em
+      account: 
+        id: Código
+        name: Nome
+        balance: Saldo
+        created_at: Criado em
+        updated_at: Atualizado em
+      category:
+        id: Código
+        description: Descrição
+        created_at: Criado em
+        updated_at: Atualizado em
+      entry: 
+        id: Código
+        description: Descrição
+        value: Valor
+        date: Data
+        billed: Faturado
+        entry_type: Tipo
+        created_at: Criado em
+        updated_at: Atualizado em
