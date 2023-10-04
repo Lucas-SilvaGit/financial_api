@@ -8,6 +8,7 @@ module V1
       filter_params = {
         description: "name",
         value: "value",
+        date: "date",
         billed: "billed",
         entry_type: "entry_type",
         category_id: "category_id",
