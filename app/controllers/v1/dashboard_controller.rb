@@ -8,12 +8,12 @@ module V1
       formatted_month = format('%02d', month)
 
       # Consulta para calcular o total de receitas no mês e ano especificados
-      total_revenue = Entry.where(entry_type: 'revenue', billed: true)
+      total_revenues = Entry.where(entry_type: 'revenue', billed: true)
                            .where("strftime('%Y', date) = ? AND strftime('%m', date) = ?", year.to_s, formatted_month)
                            .sum(:value)
 
       # Consulta para calcular o total de receitas previsto no mês e ano especificados
-      total_revenue_expected = Entry.where(entry_type: 'revenue')
+      total_revenues_expected = Entry.where(entry_type: 'revenue')
                                     .where("strftime('%Y', date) = ? AND strftime('%m', date) = ?", year.to_s, formatted_month)
                                     .sum(:value)
 
@@ -22,13 +22,19 @@ module V1
                             .where("strftime('%Y', date) = ? AND strftime('%m', date) = ?", year.to_s, formatted_month)
                             .sum(:value)
 
+      # Consulta para calcular o total de receitas previsto no mês e ano especificados
+      total_expenses_expected = Entry.where(entry_type: 'expense')
+                                    .where("strftime('%Y', date) = ? AND strftime('%m', date) = ?", year.to_s, formatted_month)
+                                    .sum(:value)
+
       # Calculo do saldo total das contas no mês e ano especificados
-      balance_total = total_revenue - total_expenses
+      balance_total = total_revenues - total_expenses
 
       render json: {
-        totalRevenues: total_revenue,
-        totalRevenuesExpected: total_revenue_expected,
+        totalRevenues: total_revenues,
+        totalRevenuesExpected: total_revenues_expected,
         totalExpenses: total_expenses,
+        totalExpensesExpected: total_expenses_expected,
         balanceTotal: balance_total
       }
     end
