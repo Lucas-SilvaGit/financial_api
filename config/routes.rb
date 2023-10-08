@@ -3,5 +3,8 @@ Rails.application.routes.draw do
     resources :accounts
     resources :entries
     resources :categories
+
+    # route for dashboard
+    get '/dashboard/:year/:month', to: 'dashboard#show'
   end
 end
