@@ -38,7 +38,7 @@ module V1
                           .where("strftime('%Y', date) = ? AND strftime('%m', date) = ?", year.to_s, formatted_month)
                           .order('value DESC')
                           .limit(10)
-                          .select(:description, :value)
+                          .select(:description, :value, :date)
 
       render json: {
         totalRevenues: total_revenues,
