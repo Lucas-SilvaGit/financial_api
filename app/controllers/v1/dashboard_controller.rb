@@ -48,7 +48,6 @@ module V1
         balanceTotal: balance_total,
         balanceTotalExpected: balance_total_expected,
         topEntries: top_entries
-        # highestRevenueCategories: categories_with_highest_revenues
       }
     end
   end
