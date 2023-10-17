@@ -39,6 +39,12 @@ module V1
                                   .order('value DESC')
                                   .limit(5)
                                   .select(:description, :value, :date)
+      
+      top_entries_expense = Entry.where(entry_type: 'expense', billed: true)
+                                  .where("strftime('%Y', date) = ? AND strftime('%m', date) = ?", year.to_s, formatted_month)
+                                  .order('value DESC')
+                                  .limit(5)
+                                  .select(:description, :value, :date)                                  
 
       render json: {
         totalRevenues: total_revenues,
@@ -47,7 +53,8 @@ module V1
         totalExpensesExpected: total_expenses_expected,
         balanceTotal: balance_total,
         balanceTotalExpected: balance_total_expected,
-        topEntriesRevenues: top_entries_revenue
+        topEntriesRevenues: top_entries_revenue,
+        topEntriesExpenses: top_entries_expense
       }
     end
   end
