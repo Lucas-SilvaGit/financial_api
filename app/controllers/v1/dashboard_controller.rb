@@ -33,6 +33,19 @@ module V1
       # Calculo do SALDO TOTAL das contas PREVISTO no mês e ano especificados
       balance_total_expected = total_revenues_expected - total_expenses_expected
 
+      # Consulta para obter as 10 maiores entradas baseadas nos valores (ordem decrescente)
+      top_entries_revenue = Entry.where(entry_type: 'revenue', billed: true)
+                                  .where("strftime('%Y', date) = ? AND strftime('%m', date) = ?", year.to_s, formatted_month)
+                                  .order('value DESC')
+                                  .limit(5)
+                                  .select(:description, :value, :date)
+      
+      top_entries_expense = Entry.where(entry_type: 'expense', billed: true)
+                                  .where("strftime('%Y', date) = ? AND strftime('%m', date) = ?", year.to_s, formatted_month)
+                                  .order('value DESC')
+                                  .limit(5)
+                                  .select(:description, :value, :date)                                  
+
       render json: {
         totalRevenues: total_revenues,
         totalRevenuesExpected: total_revenues_expected,
@@ -40,6 +53,8 @@ module V1
         totalExpensesExpected: total_expenses_expected,
         balanceTotal: balance_total,
         balanceTotalExpected: balance_total_expected,
+        topEntriesRevenues: top_entries_revenue,
+        topEntriesExpenses: top_entries_expense
       }
     end
   end
