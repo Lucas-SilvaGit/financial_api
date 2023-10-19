@@ -48,11 +48,21 @@ module V1
 
       # consulta para obter os saldos de cada conta.
       accounts = Account.where('balance > 0')
-      account_balance = {}
-    
+      account_balances = {}  # Inicialize o hash fora do loop
+
       accounts.each do |account|
-        account.calculate_balance
-        account_balance[account.name] = account.balance
+        account_revenues = account.entries.where(billed: true, entry_type: 'revenue')
+                                            .where("strftime('%Y', date) = ? AND strftime('%m', date) = ?", year.to_s, formatted_month)
+                                            .sum(:value)
+
+        account_expenses = account.entries.where(billed: true, entry_type: 'expense')
+                                            .where("strftime('%Y', date) = ? AND strftime('%m', date) = ?", year.to_s, formatted_month)
+                                            .sum(:value)
+
+        account_balance = account_revenues - account_expenses
+        if account_balance > 0
+          account_balances[account.name] = account_balance
+        end
       end
 
       render json: {
@@ -64,7 +74,7 @@ module V1
         balanceTotalExpected: balance_total_expected,
         topEntriesRevenues: top_entries_revenue,
         topEntriesExpenses: top_entries_expense,
-        accountBalance: account_balance
+        accountBalance: account_balances
       }
     end
   end
