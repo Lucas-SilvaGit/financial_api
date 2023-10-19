@@ -44,7 +44,16 @@ module V1
                                   .where("strftime('%Y', date) = ? AND strftime('%m', date) = ?", year.to_s, formatted_month)
                                   .order('value DESC')
                                   .limit(5)
-                                  .select(:description, :value, :date)                                  
+                                  .select(:description, :value, :date)
+
+      # consulta para obter os saldos de cada conta.
+      accounts = Account.where('balance > 0')
+      account_balance = {}
+    
+      accounts.each do |account|
+        account.calculate_balance
+        account_balance[account.name] = account.balance
+      end
 
       render json: {
         totalRevenues: total_revenues,
@@ -54,7 +63,8 @@ module V1
         balanceTotal: balance_total,
         balanceTotalExpected: balance_total_expected,
         topEntriesRevenues: top_entries_revenue,
-        topEntriesExpenses: top_entries_expense
+        topEntriesExpenses: top_entries_expense,
+        accountBalance: account_balance
       }
     end
   end
