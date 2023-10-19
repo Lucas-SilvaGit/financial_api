@@ -20,6 +20,12 @@ module V1
           filtered_entries = filtered_entries.where("#{field} LIKE ?", "%#{params[param]}%")
         end
       end
+
+      if params[:start_date].present? && params[:end_date].present?
+        start_date = Date.parse(params[:start_date])
+        end_date = Date.parse(params[:end_date])
+        filtered_entries = filtered_entries.where(date: start_date..end_date)
+      end
     
       @entries = filtered_entries
     
