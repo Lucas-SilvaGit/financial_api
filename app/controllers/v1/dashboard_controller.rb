@@ -44,7 +44,47 @@ module V1
                                   .where("strftime('%Y', date) = ? AND strftime('%m', date) = ?", year.to_s, formatted_month)
                                   .order('value DESC')
                                   .limit(5)
-                                  .select(:description, :value, :date)                                  
+                                  .select(:description, :value, :date)
+
+
+      # consulta para obter os saldos de cada conta.
+      accounts = Account.where('balance > 0')
+      account_balances = {}
+
+      accounts.each do |account|
+        account_revenues = account.entries.where(billed: true, entry_type: 'revenue')
+                                            .where("strftime('%Y', date) = ? AND strftime('%m', date) = ?", year.to_s, formatted_month)
+                                            .sum(:value)
+
+        account_expenses = account.entries.where(billed: true, entry_type: 'expense')
+                                            .where("strftime('%Y', date) = ? AND strftime('%m', date) = ?", year.to_s, formatted_month)
+                                            .sum(:value)
+
+        account_balance = account_revenues - account_expenses
+        if account_balance > 0
+          account_balances[account.name] = account_balance
+        end
+      end
+
+
+      # Consulta para obter saldos PREVISTOS de cada conta
+      accounts = Account.where('balance > 0')
+      account_balances_expected = {}
+
+      accounts.each do |account|
+        account_revenues = account.entries.where(entry_type: 'revenue')
+                                            .where("strftime('%Y', date) = ? AND strftime('%m', date) = ?", year.to_s, formatted_month)
+                                            .sum(:value)
+
+        account_expenses = account.entries.where(entry_type: 'expense')
+                                            .where("strftime('%Y', date) = ? AND strftime('%m', date) = ?", year.to_s, formatted_month)
+                                            .sum(:value)
+
+        account_balance = account_revenues - account_expenses
+        if account_balance > 0
+          account_balances_expected[account.name] = account_balance
+        end
+      end
 
       render json: {
         totalRevenues: total_revenues,
@@ -54,7 +94,9 @@ module V1
         balanceTotal: balance_total,
         balanceTotalExpected: balance_total_expected,
         topEntriesRevenues: top_entries_revenue,
-        topEntriesExpenses: top_entries_expense
+        topEntriesExpenses: top_entries_expense,
+        accountBalance: account_balances,
+        accountBalanceExpected: account_balances_expected
       }
     end
   end
