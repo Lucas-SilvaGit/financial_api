@@ -1,5 +1,7 @@
 module V1
   class DashboardController < ApplicationController
+    before_action :authenticate_user!
+    
     def show
       year = params[:year].to_i
       month = params[:month].to_i
