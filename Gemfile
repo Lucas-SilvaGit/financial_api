@@ -58,3 +58,6 @@ gem 'rails-i18n'
 
 # devise
 gem 'devise'
+
+# devise-jwt
+gem 'devise-jwt'
