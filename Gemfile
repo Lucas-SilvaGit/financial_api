@@ -55,3 +55,6 @@ gem 'rack-cors'
 
 #i18n
 gem 'rails-i18n'
+
+# devise token auth
+gem 'devise_token_auth'
