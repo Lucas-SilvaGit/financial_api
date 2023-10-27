@@ -1,0 +1,37 @@
+'pt-BR':
+  devise:
+    confirmations:
+      confirmed: "Seu endereço de e-mail foi confirmado com sucesso."
+      send_instructions: "Você receberá um e-mail com instruções sobre como confirmar seu endereço de e-mail em alguns minutos."
+      send_paranoid_instructions: "Se o seu endereço de e-mail existir em nosso banco de dados, você receberá um e-mail com instruções sobre como confirmar seu endereço de e-mail em alguns minutos."
+    failure:
+      already_authenticated: "Você já está autenticado."
+      inactive: "Sua conta ainda não foi ativada."
+      invalid: "Chave de autenticação inválida ou senha incorreta."
+      locked: "Sua conta está bloqueada."
+      last_attempt: "Você tem mais uma tentativa antes de sua conta ser bloqueada."
+      not_found_in_database: "Chave de autenticação inválida ou senha incorreta."
+      timeout: "Sua sessão expirou. Por favor, faça login novamente para continuar."
+      unauthenticated: "Você precisa fazer login ou se cadastrar antes de continuar."
+      unconfirmed: "Você precisa confirmar seu endereço de e-mail antes de continuar."
+    mailer:
+      confirmation_instructions:
+        subject: "Instruções de confirmação"
+      reset_password_instructions:
+        subject: "Instruções para redefinir a senha"
+      unlock_instructions:
+        subject: "Instruções para desbloqueio"
+      email_changed:
+        subject: "E-mail Alterado"
+      password_change:
+        subject: "Senha Alterada"
+  errors:
+    messages:
+      already_confirmed: "já foi confirmado, por favor, tente fazer login"
+      confirmation_period_expired: "precisa ser confirmado dentro de %{period}, por favor, solicite um novo"
+      expired: "expirou, por favor, solicite um novo"
+      not_found: "não encontrado"
+      not_locked: "não estava bloqueado"
+      not_saved:
+        one: "1 erro impediu que este %{resource} fosse salvo:"
+        other: "%{count} erros impediram que este %{resource} fosse salvo:"
