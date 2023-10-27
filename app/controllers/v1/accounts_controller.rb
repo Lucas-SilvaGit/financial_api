@@ -1,11 +1,11 @@
 module V1
   class AccountsController < ApplicationController
-    before_action :authenticate_api_user!
+    before_action :authenticate_user!
     before_action :set_account, only: [:show, :update, :destroy]
 
     # GET /accounts
     def index
-      filtered_accounts = current_api_user.account.all
+      filtered_accounts = current_user.accounts
 
       if params[:name].present?
         filtered_accounts = filtered_accounts.where("name LIKE ?", "%#{params[:name]}%")
@@ -27,7 +27,7 @@ module V1
 
     # POST /accounts
     def create
-      @account = current_api_user.account.new(account_params)
+      @account = current_user.accounts.new(account_params)
 
       if @account.save
         render json: @account, status: :created, location: v1_account_url(@account)
@@ -53,12 +53,12 @@ module V1
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_account
-        @account = current_api_user.account.find(params[:id])
+        @account = current_user.accounts.find(params[:id])
       end
 
       # Only allow a list of trusted parameters through.
       def account_params
-        params.require(:account).permit(:name, :balance)
+        params.require(:account).permit(:name, :balance, :user_id)
       end
   end
 end
