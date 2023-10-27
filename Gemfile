@@ -55,3 +55,9 @@ gem 'rack-cors'
 
 #i18n
 gem 'rails-i18n'
+
+# devise token auth
+gem 'devise_token_auth'
+
+# active model serializers
+gem 'active_model_serializers'

@@ -1,10 +1,11 @@
 module V1
   class EntriesController < ApplicationController
+    before_action :authenticate_user!
     before_action :set_entry, only: [:show, :update, :destroy]
 
     # GET /entries
     def index
-      filtered_entries = Entry.all
+      filtered_entries = current_user.accounts.includes(:entries).map(&:entries).flatten
       filter_params = {
         description: "name",
         value: "value",
@@ -39,7 +40,8 @@ module V1
 
     # POST /entries
     def create
-      @entry = Entry.new(entry_params)
+      # @entry = Entry.new(entry_params)
+      @entry = current_user.accounts.find(params[:account_id]).entries.new(entry_params)
 
       if @entry.save
         @entry.account.calculate_balance
