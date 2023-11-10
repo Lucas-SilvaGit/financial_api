@@ -86,6 +86,10 @@ module V1
         end
       end
 
+      # Consulta para obter porcentagem economizada no mes das receitas e gastos faturados
+      economy_percentage = total_revenues.zero? ? 0 : format("%.2f", (balance_total.to_f / total_revenues) * 100)
+
+
       render json: {
         totalRevenues: total_revenues,
         totalRevenuesExpected: total_revenues_expected,
@@ -96,7 +100,8 @@ module V1
         topEntriesRevenues: top_entries_revenue,
         topEntriesExpenses: top_entries_expense,
         accountBalance: account_balances,
-        accountBalanceExpected: account_balances_expected
+        accountBalanceExpected: account_balances_expected,
+        economyPercentage: economy_percentage 
       }
     end
   end
