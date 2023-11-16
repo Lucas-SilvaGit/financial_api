@@ -29,7 +29,7 @@ RSpec.describe Entry, type: :model do
     
       expense_entry = build(:entry, account: account, entry_type: 'expense', billed: false, value: -300)
     
-      expect { expense_entry.save! }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Valor cannot be negative')
+      expect { expense_entry.save! }.to raise_error(ActiveRecord::RecordInvalid, /Valor cannot be negative/)
     end
   end    
 end
