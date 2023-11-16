@@ -24,13 +24,13 @@ RSpec.describe Entry, type: :model do
       expect { expense_entry.save! }.to raise_error(ActiveRecord::RecordInvalid, /Expense amount exceeds account balance/)
     end
 
-    it 'when entry has negative value' do
-      account = create(:account, balance: 500)
+    it "displays an error message if the expense has a negative value" do
+      entry = build(:entry, account: account, entry_type: 'expense', billed: true, value: -300)
     
-      expense_entry = build(:entry, account: account, entry_type: 'expense', billed: false, value: -300)
-    
-      expect { expense_entry.save! }.to raise_error(ActiveRecord::RecordInvalid, /Valor cannot be negative/)
+      expect(entry).to_not be_valid
+      expect(entry.errors[:value]).to include('cannot be negative')
     end
+    
 
     it 'displays an error message if the revenue has a negative value' do
       entry = build(:entry, account: account, entry_type: 'revenue', billed: true, value: -300)
