@@ -31,5 +31,12 @@ RSpec.describe Entry, type: :model do
     
       expect { expense_entry.save! }.to raise_error(ActiveRecord::RecordInvalid, /Valor cannot be negative/)
     end
+
+    it 'displays an error message if the revenue has a negative value' do
+      entry = build(:entry, account: account, entry_type: 'revenue', billed: true, value: -300)
+
+      expect(entry).to_not be_valid
+      expect(entry.errors[:value]).to include('cannot be negative')
+    end
   end    
 end
