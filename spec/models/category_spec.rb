@@ -6,4 +6,10 @@ RSpec.describe Category, type: :model do
     
     expect(category).to be_valid
   end  
+
+  it "is invalid without a description" do
+    category = build(:category, description: nil)
+    
+    expect(category).to_not be_valid
+  end
 end
