@@ -19,4 +19,12 @@ RSpec.describe Category, type: :model do
 
     expect(category_last).to_not be_valid
   end
+
+  it 'has many entries' do
+    category = create(:category, description: "my category")
+    entry1 = create(:entry, category: category)
+    entry2 = create(:entry, category: category)
+
+    expect(category.entries).to include(entry1, entry2)
+  end
 end
