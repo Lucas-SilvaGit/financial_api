@@ -12,4 +12,11 @@ RSpec.describe Category, type: :model do
     
     expect(category).to_not be_valid
   end
+
+  it 'validates uniqueness description' do
+    category_first = create(:category, description: "my category")
+    category_last = build(:category, description: "my category")
+
+    expect(category_last).to_not be_valid
+  end
 end
