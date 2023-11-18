@@ -27,4 +27,11 @@ RSpec.describe Category, type: :model do
 
     expect(category.entries).to include(entry1, entry2)
   end
+
+  it 'destroys associated entries when destroyed' do
+    category = create(:category)
+    entry1 = create(:entry, category: category)
+
+    expect{category.destroy}.to change { Entry.count }.by(-1)
+  end 
 end
