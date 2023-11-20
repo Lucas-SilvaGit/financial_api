@@ -1,6 +1,6 @@
   class Account < ApplicationRecord
     before_create :set_default_balance
-    has_many :entries
+    has_many :entries, dependent: :destroy
 
     validates :name, length: { maximum: 50 }, presence: true
     validates :balance, numericality: { greater_than_or_equal_to: 0 }
