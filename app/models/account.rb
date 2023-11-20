@@ -2,7 +2,7 @@
     before_create :set_default_balance
     has_many :entries, dependent: :destroy
 
-    validates :name, length: { maximum: 50 }, presence: true
+    validates :name, length: { maximum: 50 }, presence: true, uniqueness: true
     validates :balance, numericality: { greater_than_or_equal_to: 0 }
 
     def calculate_balance
