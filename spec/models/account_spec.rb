@@ -64,4 +64,10 @@ RSpec.describe Account, type: :model do
 
     expect{ account.destroy }.to change { Entry.count }.by(-1)
   end
+
+  it 'is invalid without a valid description' do
+    account = build(:account, name: nil)
+
+    expect(account).to_not be_valid
+  end
 end
