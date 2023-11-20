@@ -70,4 +70,11 @@ RSpec.describe Account, type: :model do
 
     expect(account).to_not be_valid
   end
+
+  it 'validates uniqueness description' do
+    account1 = create(:account, name: "my_account")
+    account2 = build(:account, name: "my_account")
+
+    expect(account2).to_not be_valid
+  end
 end
