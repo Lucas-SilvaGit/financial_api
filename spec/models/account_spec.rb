@@ -57,4 +57,11 @@ RSpec.describe Account, type: :model do
 
     expect(account.entries).to include(entry1, entry2)  
   end
+
+  it 'destroy associated entries when account destroyed' do
+    account = create(:account, balance: 0)
+    entry1 = create(:entry, account: account)
+
+    expect{ account.destroy }.to change { Entry.count }.by(-1)
+  end
 end
