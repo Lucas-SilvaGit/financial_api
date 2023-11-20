@@ -49,4 +49,12 @@ RSpec.describe Account, type: :model do
       expect(account.balance).to eq(0)
     end
   end
+
+  it 'has many entries' do
+    account = create(:account, balance: 0)
+    entry1 = create(:entry, account: account, entry_type: 'revenue', billed: false, value: 200)
+    entry2 = create(:entry, account: account, entry_type: 'expense', billed: false, value: 100)
+
+    expect(account.entries).to include(entry1, entry2)  
+  end
 end
