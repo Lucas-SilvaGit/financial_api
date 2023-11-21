@@ -49,4 +49,32 @@ RSpec.describe Account, type: :model do
       expect(account.balance).to eq(0)
     end
   end
+
+  it 'has many entries' do
+    account = create(:account, balance: 0)
+    entry1 = create(:entry, account: account, entry_type: 'revenue', billed: false, value: 200)
+    entry2 = create(:entry, account: account, entry_type: 'expense', billed: false, value: 100)
+
+    expect(account.entries).to include(entry1, entry2)  
+  end
+
+  it 'destroy associated entries when account destroyed' do
+    account = create(:account, balance: 0)
+    entry1 = create(:entry, account: account)
+
+    expect{ account.destroy }.to change { Entry.count }.by(-1)
+  end
+
+  it 'is invalid without a valid description' do
+    account = build(:account, name: nil)
+
+    expect(account).to_not be_valid
+  end
+
+  it 'validates uniqueness description' do
+    account1 = create(:account, name: "my_account")
+    account2 = build(:account, name: "my_account")
+
+    expect(account2).to_not be_valid
+  end
 end
