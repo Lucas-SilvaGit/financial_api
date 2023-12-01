@@ -59,3 +59,6 @@ gem 'rails-i18n'
 #solar graph
 gem 'rubocop-rails'
 gem 'solargraph-rails'
+
+#rswagger
+gem 'rswag'
