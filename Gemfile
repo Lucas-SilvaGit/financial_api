@@ -55,3 +55,7 @@ gem 'rack-cors'
 
 #i18n
 gem 'rails-i18n'
+
+#solar graph
+gem 'rubocop-rails'
+gem 'solargraph-rails'
